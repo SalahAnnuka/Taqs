@@ -11,11 +11,19 @@ function NavBar(){
   );
 }
 
+function Home(){
+  return (
+    <div className="Home">
+
+    </div>
+  );
+}
+
 function App() {
   return (
     <div className="App">
       <NavBar/>
-      <h1>Hello World!</h1>
+      <Home/>
     </div>
   );
 }

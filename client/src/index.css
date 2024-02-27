@@ -6,7 +6,7 @@
   box-sizing: border-box;
 }
 
-body {
+body{
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -30,6 +30,11 @@ body {
   padding: 15px;
   background-color: rgb(121, 206, 248);
   align-items:center;
+}
+
+.Home{
+  display: flex;
+  flex: 1;
 }
 
 .logo{
