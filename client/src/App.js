@@ -14,7 +14,6 @@ function NavBar(){
 function Home(){
   return (
     <div className="Home">
-
     </div>
   );
 }
