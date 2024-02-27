@@ -37,17 +37,3 @@ body {
   top: 8px;
   width: 120px;
 }
-
-.logo:hover{
-  animation: zoom .2s;
-  width: 150px;
-}
-
-@keyframes zoom{
-  0%{
-    width: 120px;
-  }
-  100%{
-    width: 150px;
-  }
-}
