@@ -5,7 +5,7 @@ import taqs_white from './drawable/taqs-white.svg';
 
 function HomeNav(){
   return (
-    <div className="NavBar">
+    <div className="HomeNav">
       <img className="logo" src={taqs_white}/>
     </div>
   );
@@ -26,7 +26,6 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/" element={<Home/>}/>
-          <Route exact/>
         </Routes>
       </Router>
     </div>
