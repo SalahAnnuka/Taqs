@@ -25,7 +25,7 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route exact/>
+          <Route exact path="/" element={<Home/>}/>
           <Route exact/>
         </Routes>
       </Router>
