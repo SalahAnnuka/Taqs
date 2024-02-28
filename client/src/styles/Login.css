@@ -1,0 +1,14 @@
+.Login{
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.formBox{
+  background-color: aqua;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 400px;
+}
