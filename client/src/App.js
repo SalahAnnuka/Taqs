@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import taqs_black from './drawable/taqs-black.svg';
 import taqs_white from './drawable/taqs-white.svg';
-
+import Login from './Login';
+import SignUp from './SignUp';
 
 function HomeNav(){
   return (
@@ -26,6 +27,8 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/" element={<Home/>}/>
+          <Route exact path="/Login" element={<Login/>}/>
+          <Route exact path="/SignUp" element={<SignUp/>}/>
         </Routes>
       </Router>
     </div>
