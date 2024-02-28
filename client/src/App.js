@@ -3,7 +3,7 @@ import taqs_black from './drawable/taqs-black.svg';
 import taqs_white from './drawable/taqs-white.svg';
 
 
-function NavBar(){
+function HomeNav(){
   return (
     <div className="NavBar">
       <img className="logo" src={taqs_white}/>
@@ -14,7 +14,8 @@ function NavBar(){
 function Home(){
   return (
     <div className="Home">
-
+      <HomeNav/>
+      
     </div>
   );
 }
@@ -22,8 +23,12 @@ function Home(){
 function App() {
   return (
     <div className="App">
-      <NavBar/>
-      <Home/>
+      <Router>
+        <Routes>
+          <Route exact/>
+          <Route exact/>
+        </Routes>
+      </Router>
     </div>
   );
 }
