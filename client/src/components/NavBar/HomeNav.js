@@ -3,11 +3,11 @@ import {Link} from 'react-router-dom';
 
 function HomeNav(){
     return (
-      <div className="HomeNav">
+      <div className="NavBar">
         <img className="logo" src={taqs_white}/>
         <div className='navButtons'>
             <Link to='/Login' className='navOption'>Login</Link>
-            <Link to='/SignUp' className='navOption'>SignUp</Link>
+            <Link to='/SignUp' className='navOption'>Sign Up</Link>
         </div>
       </div>
     );
