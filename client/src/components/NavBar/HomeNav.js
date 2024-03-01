@@ -1,4 +1,4 @@
-import taqs_white from './drawable/taqs-white.svg';
+import taqs_white from '../drawable/taqs-white.svg';
 import {Link} from 'react-router-dom';
 
 function HomeNav(){
