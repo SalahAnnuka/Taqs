@@ -1,8 +1,6 @@
 import taqs_white from './drawable/taqs-white.svg';
-import {Link} from 'react-router-dom';
-import './styles/User.css';
 
-function Navbar(){
+function UserNav(){
     return (
       <div className="HomeNav">
         <img className="logo" src={taqs_white}/>
@@ -13,13 +11,5 @@ function Navbar(){
       </div>
     );
   }
-  
-  function User(){
-    return (
-      <div className="Home">
-        <Navbar/>
-      </div>
-    );
-  }
 
-  export default User;
+  export default UserNav;
