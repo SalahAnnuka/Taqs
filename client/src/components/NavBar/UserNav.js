@@ -2,6 +2,7 @@ import SearchBar from './SearchBar';
 import {Link,Navigate} from "react-router-dom";
 import taqs_white from '../drawable/taqs-white.svg';
 import { useState } from 'react';
+import "./UserNav.css";
 
 
  
@@ -27,8 +28,10 @@ function UserNav({Username}){
     return (
       <div className="NavBar">
         <Link to="/User"><img className="logo" src={taqs_white} alt="Logo image."/></Link>
-        <button onClick={handleClick}>Log Out</button>
-        <SearchBar Username={Username}/>
+        <div className='usernav-right-elements'>
+          <SearchBar Username={Username}/>
+          <button className='usernav-logout-button' onClick={handleClick}>Log Out</button>
+        </div>
       </div>
     );
   }

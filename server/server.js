@@ -6,27 +6,10 @@ const cors = require('cors');
 
 const fs = require('fs');
 
-const bodyParser = require('body-parser');
 
 // Enable CORS with specific options
 app.use(cors());
-// Middleware to parse JSON bodies
-app.use(bodyParser.json());
 
-// Route to check if username or email exists
-app.post('/checkUser', (req, res) => {
-    const users = JSON.parse(fs.readFileSync('users.json', 'utf8'));
-
-    const { username, email } = req.body;
-
-    // Check if username exists
-    const usernameExists = database.some(user => user.username === username);
-    
-    // Check if email exists
-    const emailExists = database.some(user => user.email === email);
-
-    res.json({ usernameExists, emailExists });
-});
 
 app.get('/Result/:country/:city', function(req,res){
     var result = '';
@@ -43,6 +26,18 @@ app.get('/Result/:country/:city', function(req,res){
         }
     });
 });
+
+
+app.post('/loginValidate',function(req,res){
+
+    res.send(result);
+});
+
+app.post('/signupValidate',function(req,res){
+    
+    res.send(result);
+});
+
 
 
 app.get('/MiniData/:query', function(req, res) {

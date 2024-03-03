@@ -13,6 +13,7 @@
     padding: 0;
     padding-left: 10px;
     gap: 5px;
+    border-radius: 10px;
   }
   
   .search-icon{
