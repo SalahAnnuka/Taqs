@@ -1,3 +1,30 @@
-[{
-    "user_1":{"country":"AD","city":"Canillo"}
-}]
+[
+    {
+      "john_doe": {
+        "country": "JO",
+        "city": "Amman"
+      }
+    },
+    {
+      "jane_smith": {
+        "country": "US",
+        "city": "New York"
+
+      }
+    },
+    {
+      "mike_jackson": {
+        "country": "CA",
+        "city": "Toronto"
+      }
+    },
+    {
+      "sara_adams": {
+        "country": "AU",
+        "city": "Sydney",
+        "language": "English"
+      }
+    }
+  ]
+  
+  

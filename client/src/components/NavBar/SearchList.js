@@ -1,13 +1,13 @@
 import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 
-function SearchList({result,clearInput}){
+function SearchList({result,clearInput,Username}){
     const navigate = useNavigate();
     const [cityData,setCityData] = useState();
 
     function handleClick(country,city)
     {
-        navigate(`/${country}/${city}`);
+        navigate(`/User/${Username}/${country}/${city}`);
         clearInput();
     }
 

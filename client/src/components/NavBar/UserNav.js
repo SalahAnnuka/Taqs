@@ -28,7 +28,7 @@ function UserNav({Username}){
       <div className="NavBar">
         <Link to="/User"><img className="logo" src={taqs_white} alt="Logo image."/></Link>
         <button onClick={handleClick}>Log Out</button>
-        <SearchBar/>
+        <SearchBar Username={Username}/>
       </div>
     );
   }

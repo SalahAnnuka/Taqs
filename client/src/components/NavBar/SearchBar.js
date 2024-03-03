@@ -4,7 +4,7 @@ import SearchList from "./SearchList";
 import "./SearchBar.css";
 
 
-function SearchBar(){
+function SearchBar({Username}){
 
     const [input,setInput] = useState("");
     const [result,setResult] = useState([]);
@@ -47,7 +47,7 @@ function SearchBar(){
                     onChange={(e)=>handleChange(e.target.value)}
                 />
             </div>
-            <SearchList result = {result} clearInput={clearInput}/>
+            <SearchList Username={Username} result = {result} clearInput={clearInput}/>
         </div>
     );
 }

@@ -1,5 +1,5 @@
 import { useState,useEffect } from "react";
-import "./CityDetails.css";
+import "./styles/CityDetails.css";
 
 import clear from "./drawable/img/clear.jpeg";
 import clouds from "./drawable/img/clouds.jpeg";
@@ -77,7 +77,7 @@ function CityDetails({country,city}){
             <div className="details-divider"></div>
             <div className="details-current-temp">
                 <div>{weatherData.main.temp}° C</div>
-                <div className="details-feels-like">Feels like {weatherData.main.temp}° C</div>
+                <div className="details-feels-like">Feels like {weatherData.main.feels_like}° C</div>
             </div>
             <img className="details-icon" src={getIcon(weatherData.weather[0].icon)}/>
            </div>

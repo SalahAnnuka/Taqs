@@ -15,6 +15,8 @@ app.use(bodyParser.json());
 
 // Route to check if username or email exists
 app.post('/checkUser', (req, res) => {
+    const users = JSON.parse(fs.readFileSync('users.json', 'utf8'));
+
     const { username, email } = req.body;
 
     // Check if username exists
