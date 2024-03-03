@@ -1,23 +1,27 @@
 [
     {
-      "username": "john_doe",
+      "john_doe":{
       "email": "john.doe@example.com",
       "password": "jdP@ssw0rd"
+      }
     },
     {
-      "username": "jane_smith",
+      "jane_smith": {
       "email": "jane.smith@example.com",
       "password": "jsP@ssw0rd"
+      }
     },
     {
-      "username": "mike_jackson",
+      "mike_jackson":{
       "email": "mike.jackson@example.com",
       "password": "mjP@ssw0rd"
+      }
     },
     {
-      "username": "sara_adams",
+      "sara_adams":{
       "email": "sara.adams@example.com",
       "password": "saP@ssw0rd"
+      }
     }
   ]
   
