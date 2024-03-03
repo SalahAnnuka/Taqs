@@ -1,4 +1,5 @@
 import { useState,useEffect } from "react";
+import "./CityDetails.css";
 
 function CityDetails({country,city}){
     const [weatherData, setWeatherData] = useState([]);
@@ -41,6 +42,7 @@ function CityDetails({country,city}){
         );
     else return (
         <div className="CityDetails">
+            <div className="dim"></div>
           <h1>Weather Details in {city}, {country}: </h1>
           <div>Description: {capitalize(weatherData.weather[0].description)}</div>
           <div>Min. Temperature: {weatherData.main.temp_min}</div>
