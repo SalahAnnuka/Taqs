@@ -44,7 +44,6 @@ function SearchBar(){
                 <input 
                     placeholder="Search by city name..." 
                     className="search-field"
-                    value={input}
                     onChange={(e)=>handleChange(e.target.value)}
                 />
             </div>

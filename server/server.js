@@ -1,13 +1,30 @@
 const express = require('express');
 const request = require('request');
 const app = express();
+
 const cors = require('cors');
+
 const fs = require('fs');
+
+const bodyParser = require('body-parser');
 
 // Enable CORS with specific options
 app.use(cors());
+// Middleware to parse JSON bodies
+app.use(bodyParser.json());
 
+// Route to check if username or email exists
+app.post('/checkUser', (req, res) => {
+    const { username, email } = req.body;
 
+    // Check if username exists
+    const usernameExists = database.some(user => user.username === username);
+    
+    // Check if email exists
+    const emailExists = database.some(user => user.email === email);
+
+    res.json({ usernameExists, emailExists });
+});
 
 app.get('/Result/:country/:city', function(req,res){
     var result = '';

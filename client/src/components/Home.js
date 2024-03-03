@@ -1,6 +1,5 @@
 import HomeNav from "./NavBar/HomeNav";
 import CityDetails from "./CityDetails";
-import './Home.css';
   
   function Home(){
     return (

@@ -1,25 +1,19 @@
 
 import UserNav from "./NavBar/UserNav";
-import {Routes, Route, Navigate} from "react-router-dom";
 import UserPage from "./UserPage";
 import { useState } from 'react';
+import { useParams } from "react-router-dom";
 
 
   function User(){
-    const [user,setUser] = useState("Salah");
-
-    function logOut(){
-      setUser(null);
-    }
-
-    if (!user)
-    return(
-      <Navigate to="/" replace=""/>
-      );
+    const {Username} = useParams;
+    
     return (
       <div className="Home">
-          <UserNav user={user} logOut={logOut}/>
-          <UserPage/>
+          <UserNav Username={Username}/>
+          <div className="home-body">
+            <UserPage/>
+          </div>
       </div>
     );
   }
