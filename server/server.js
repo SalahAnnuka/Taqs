@@ -4,11 +4,14 @@ const app = express();
 const cors = require('cors');
 const fs = require('fs');
 
+// Enable CORS with specific options
+app.use(cors());
 
-app.get('/Result/:city', function(req,res){
+
+
+app.get('/Result/:country/:city', function(req,res){
     var result = '';
-    var apireq = `https://api.openweathermap.org/data/2.5/weather?q=${req.params.city}&units=metric&appid=b5331a7dcbc34c05a7cab530bc441d05`;
-    console.log(apireq);
+    var apireq = `https://api.openweathermap.org/data/2.5/weather?q=${req.params.city},${req.params.country}&units=metric&appid=b5331a7dcbc34c05a7cab530bc441d05`;
     request(apireq, function (error, response, body) {
         if (response.statusCode === 200)
         {
@@ -21,9 +24,6 @@ app.get('/Result/:city', function(req,res){
         }
     });
 });
-
-// Enable CORS with specific options
-app.use(cors());
 
 
 app.get('/MiniData/:query', function(req, res) {
@@ -45,7 +45,6 @@ app.get('/MiniData/:query', function(req, res) {
                 return cityName.includes(query);
             });
 
-            // Return the notes data as JSON
             res.json(filteredData);
         } catch (parseError) {
             console.error('Error parsing JSON:', parseError);

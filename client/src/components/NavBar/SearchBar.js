@@ -1,6 +1,7 @@
 import {FaSearch} from "react-icons/fa";
 import React, {useState} from "react";
 import SearchList from "./SearchList";
+import "./SearchBar.css";
 
 
 function SearchBar(){
@@ -27,10 +28,14 @@ function SearchBar(){
         }
     };
 
+
     const handleChange = (value)=>{
         setInput(value);
         fetchData(value);
     }
+    const clearInput = () => {
+        setInput('');
+      };
 
     return (
         <div className="SeachBar">
@@ -43,7 +48,7 @@ function SearchBar(){
                     onChange={(e)=>handleChange(e.target.value)}
                 />
             </div>
-            <SearchList result = {result}/>
+            <SearchList result = {result} clearInput={clearInput}/>
         </div>
     );
 }

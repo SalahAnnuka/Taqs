@@ -1,18 +1,25 @@
-import SearchList from "./NavBar/SearchList";
+
 import UserNav from "./NavBar/UserNav";
-import {Routes, Route} from "react-router-dom";
+import {Routes, Route, Navigate} from "react-router-dom";
 import UserPage from "./UserPage";
-import City from "./City";
+import { useState } from 'react';
 
 
   function User(){
+    const [user,setUser] = useState("Salah");
+
+    function logOut(){
+      setUser(null);
+    }
+
+    if (!user)
+    return(
+      <Navigate to="/" replace=""/>
+      );
     return (
       <div className="Home">
-        <UserNav/>
-        <Routes>
-          <Route exact path="/" element={<UserPage/>}/>
-          <Route exact path="/City" element={<City/>}/>
-        </Routes>
+          <UserNav user={user} logOut={logOut}/>
+          <UserPage/>
       </div>
     );
   }

@@ -3,6 +3,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import Home from './components/Home';
 import User from './components/User';
+import City from './components/City';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Route exact path="/Login" element={<Login/>}/>
           <Route exact path="/SignUp" element={<SignUp/>}/>
           <Route exact path="/User" element={<User/>}/>
+          <Route exact path="/:country/:city" element={<City/>}/>
         </Routes>
       </Router>
     </div>

@@ -1,8 +1,15 @@
-import React from "react";
+import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
 
-function SearchList({result}){
+function SearchList({result,clearInput}){
     const navigate = useNavigate();
+    const [cityData,setCityData] = useState();
+
+    function handleClick(country,city)
+    {
+        navigate(`/${country}/${city}`);
+        clearInput();
+    }
 
     result = result.slice(0,10);
     if (result.length > 0)
@@ -11,7 +18,7 @@ function SearchList({result}){
                 {
                     result.map((item, id) => {
                         return (
-                                <button key={id} className="search-result" onClick={() => navigate("/City")}>{item.name}, {item.country}</button>
+                                <button key={id} className="search-result" onClick={() => handleClick(item.country,item.name)}>{item.name}, {item.country}</button>
                         );
                     })
                 }

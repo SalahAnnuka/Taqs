@@ -1,10 +1,21 @@
 import SearchBar from './SearchBar';
+import {Link,Navigate} from "react-router-dom";
 import taqs_white from '../drawable/taqs-white.svg';
+import { useState } from 'react';
 
-function UserNav(){
+
+ 
+function UserNav({user,logOut}){
+    
+    function handleClick(){
+      try {logOut();}
+      catch(error){console.log("failed to log out: "+error)}
+    }
+
     return (
       <div className="NavBar">
-        <img className="logo" src={taqs_white}/>
+        <Link to="/User"><img className="logo" src={taqs_white}/></Link>
+        <button onClick={handleClick}>Log Out</button>
         <SearchBar/>
       </div>
     );
