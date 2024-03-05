@@ -17,7 +17,7 @@ function Login(){
 
         try{
 
-            await axios.post("http://localhost:7777/",{
+            await axios.post("http://localhost:7777/login",{
                 username,password
             })
             .then(res=>{
@@ -25,11 +25,11 @@ function Login(){
                     navigate(`/User/${username}`,{state:{id:username}})
                 }
                 else if(res.data=="notexist"){
-                    setErrMessage('Invalid Login Credentials.');
+                    setErrMessage(`No such username as ${username}.`);
                 }
             })
             .catch(e=>{
-                setErrMessage('Invalid Login Credentials.');
+                setErrMessage('Login failed, Please try again.');
                 console.log(e);
             })
 

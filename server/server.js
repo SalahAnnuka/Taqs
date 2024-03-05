@@ -107,6 +107,7 @@ app.get('/MiniData/:query', function(req, res) {
 });
 
 
+
 app.get('/',function(req,res){
     res.send('Server Start.');
 });
