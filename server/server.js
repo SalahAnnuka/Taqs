@@ -111,6 +111,65 @@ app.get('/MiniData/:query', function(req, res) {
 app.get('/',function(req,res){
     res.send('Server Start.');
 });
+//
+
+app.get('/forecast/:country/:city', async (req, res) => {
+
+    var apireq = `https://api.openweathermap.org/data/2.5/forecast?q=${req.params.city},${req.params.country}&units=metric&appid=b5331a7dcbc34c05a7cab530bc441d05`;
+
+    try {
+        // Fetch data from the API
+        const response = await fetch(apireq);
+        const forecastData = await response.json();
+
+        // Parse the forecast data into the specified format
+        const formattedForecast = formatForecastData(forecastData);
+
+        // Send the formatted data as JSON response
+        res.json(formattedForecast);
+    } catch (error) {
+        console.error('Error fetching forecast data:', error);
+        res.status(500).json({ error: 'Failed to fetch forecast data' });
+    }
+});
+
+function formatForecastData(forecastData) {
+    const formattedForecast = {};
+
+    // Loop through each forecast item
+    forecastData.list.forEach(item => {
+        const dateTime = new Date(item.dt_txt);
+        const dayOfWeek = dateTime.toLocaleDateString('en-US', { weekday: 'long' });
+        const hourOfDay = `hour${dateTime.getHours()}`;
+
+        // Initialize day if not already present
+        if (!formattedForecast[dayOfWeek]) {
+            formattedForecast[dayOfWeek] = {};
+        }
+
+        // Initialize hour if not already present
+        if (!formattedForecast[dayOfWeek][hourOfDay]) {
+            formattedForecast[dayOfWeek][hourOfDay] = { hour: dateTime.getHours() };
+        }
+
+        // Extract weather details
+        const weatherDetails = {
+            weather: {
+                main: item.weather[0].main,
+                description: item.weather[0].description,
+                icon: item.weather[0].icon
+            },
+            temperature: item.main.temp,
+            feelsLike: item.main.feels_like
+        };
+
+        // Add weather details to the formatted forecast
+        formattedForecast[dayOfWeek][hourOfDay] = { ...formattedForecast[dayOfWeek][hourOfDay], ...weatherDetails };
+    });
+
+    return formattedForecast;
+}
+
 
 var server = app.listen(7777,function(){
     var port = server.address().port;

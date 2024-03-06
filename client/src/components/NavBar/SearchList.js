@@ -11,7 +11,7 @@ function SearchList({result,clearInput,Username}){
         clearInput();
     }
 
-    result = result.slice(0,10);
+    result = result.slice(0,25);
     if (result.length > 0)
     return (
             <div className="search-results">

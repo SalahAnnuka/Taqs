@@ -9,7 +9,7 @@
     justify-content: center;
     border-radius: 20px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
-    max-width: 600px;
+    width: 600px;
 }
 
 .details-bg{
@@ -45,8 +45,11 @@
 
 .details-divider{
     background-color: white;
-    height: 150px;
+    height: 200px;
     width: 2px;
+    margin: 0;
+    margin-left: 5px;
+    margin-right: 10px;
 }
 
 .details-current-temp{

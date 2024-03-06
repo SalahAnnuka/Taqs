@@ -9,7 +9,7 @@ const PSWD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 function SignUp(){
     const navigate = useNavigate();
 
-    const [errMessage,setErrMessage] = useState;
+    const [errMessage,setErrMessage] = useState('');
 
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
@@ -21,21 +21,39 @@ function SignUp(){
         {
             setErrMessage('Invalid username, Please try something else');
         }
+        else
+        {
+            setErrMessage('');
+        }
+        console.log(result);
     }
 
     function validateMatch(){
-        if (!(password === password2))
+        var result = (password == password2);
+        if (!result)
         {
             setErrMessage('Password doesnt match.');
         }
+        else
+        {
+            setErrMessage('');
+        }
+        console.log(password);
+        console.log(password2);
+        console.log(result);
     }
 
     function validatePassword(ps){
-        var result = USR_REGEX.test(ps);
+        var result = PSWD_REGEX.test(ps);
         if (!result)
         {
             setErrMessage('Invalid password, Not strong enough.');
         }
+        else
+        {
+            setErrMessage('');
+        }
+        console.log(result);
     }
 
     function onUsernameChange(usr){
@@ -45,8 +63,8 @@ function SignUp(){
 
     function onPasswordChange(pswd){
         setPassword(pswd);
-        validatePassword(password);
         validateMatch();
+        validatePassword(password);
     }
 
     function onPassword2Change(pswd2){
@@ -87,8 +105,8 @@ function SignUp(){
             <form className='form-box' action='POST'>
             <h1 className='form-title'>Sign Up to Taqs</h1>
                 <input type="text" className="form-field" name="username" placeholder='Username' onChange={(e)=>onUsernameChange(e.target.value)} required/>
-                <input type='password' className="form-field" name="password" placeholder='Password' onChange={(e)=>onPasswordChange(e.target.value)} required/>
-                <input type='password2' className="form-field" name="password2" placeholder='Confirm Password' onChange={(e)=>onPassword2Change(e.target.value)} required/>
+                <input type='text' className="form-field" name="password" placeholder='Password' onChange={(e)=>onPasswordChange(e.target.value)} required/>
+                <input type='text' className="form-field" name="password2" placeholder='Confirm Password' onChange={(e)=>onPassword2Change(e.target.value)} required/>
                 <button type="submit" className='submit-button' onClick={submit}>Sign Up</button>
                 <div className='submit-error-message'>{errMessage}</div>
                 <span>Already have account? <Link className='form-link' to='/Login'>Login.</Link></span>

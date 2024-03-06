@@ -1,0 +1,13 @@
+.Facts{
+    margin-top: 30px;
+}
+
+.facts-title{
+    margin-bottom: 10px;
+}
+
+.fact{
+    line-height: 130%;
+    max-width: 600px;
+
+}

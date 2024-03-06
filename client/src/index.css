@@ -21,6 +21,11 @@ body{
 
 .home-body{
   padding: 40px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
 }
 
 #root{

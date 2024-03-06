@@ -1,0 +1,76 @@
+.forecast-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.forecast {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.card {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    position: relative;
+}
+
+.card-title {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    z-index: 20;
+}
+
+.hourly-forecast {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    max-height: 200px; /* Adjust the max height as needed */
+    overflow: auto; /* Enable vertical scroll */
+}
+
+.hour {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 20;
+    text-align: left;
+    justify-content: start;
+}
+
+.hour-label {
+    font-weight: bold;
+}
+
+.weather-icon {
+    width: 50px;
+    height: 50px;
+}
+
+.weather-details {
+    text-align: center;
+}
+
+.forecast-feels-like{
+    font-size: 12px;
+}
+
+.forecast-dim{
+    background-color: rgba(0, 0, 0, .2);
+    position: absolute;
+    width: 700px;
+    height: 100%;
+    z-index: 12;
+    top: 0;
+    left: 0;
+}
