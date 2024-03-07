@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from "axios";
 import {Link , useNavigate} from 'react-router-dom';
 import "./styles/Login-SignUp.css";
@@ -12,64 +12,102 @@ function SignUp(){
     const [errMessage,setErrMessage] = useState('');
 
     const [username,setUsername] = useState('');
+    const [validUserName,setValidUsername] = useState(false);
+
     const [password,setPassword] = useState('');
+    const [validPassword,setValidPassword] = useState(false);
+
     const [password2,setPassword2] = useState('');
 
+    const [validMatch,setValidMatch] = useState('false');
+
+
+    useEffect(() => {
+        validateUserName(username);
+    }, [username]);
+    
+    useEffect(() => {
+        validateMatch();
+    }, [password, password2]);
+    
+    useEffect(() => {
+        validatePassword(password);
+    }, [password]);
+
     function validateUserName(un){
+        if (un == ""){
+            setErrMessage("Username Cannot be empty.");
+            setValidUsername(false);
+            return;
+        }
         var result = USR_REGEX.test(un);
         if (!result)
         {
             setErrMessage('Invalid username, Please try something else');
+            setValidUsername(false);
         }
         else
         {
             setErrMessage('');
+            setValidUsername(true);
         }
-        console.log(result);
-    }
-
-    function validateMatch(){
-        var result = (password == password2);
-        if (!result)
-        {
-            setErrMessage('Password doesnt match.');
-        }
-        else
-        {
-            setErrMessage('');
-        }
-        console.log(password);
-        console.log(password2);
         console.log(result);
     }
 
     function validatePassword(ps){
+        if (ps == ""){
+            setErrMessage("");
+            setValidPassword(false);
+            return;
+        }
         var result = PSWD_REGEX.test(ps);
         if (!result)
         {
             setErrMessage('Invalid password, Not strong enough.');
+            setValidPassword(false);
         }
         else
         {
             setErrMessage('');
+            setValidPassword(true);
         }
-        console.log(result);
+        if (username=="")
+        {
+            setErrMessage("Username Cannot be empty.");
+        }
+    }
+
+    function validateMatch(){
+        if(!validPassword && password!="")
+            return;
+
+        var result = (password == password2);
+        if (!result)
+        {
+            setErrMessage('Password doesnt match.');
+            setValidMatch(false);
+        }
+        else
+        {
+            setErrMessage('');
+            setValidUsername(true);
+        }
+        if (username=="")
+        {
+            setErrMessage("Username Cannot be empty.");
+        }
     }
 
     function onUsernameChange(usr){
         setUsername(usr);
-        validateUserName(username);
     }
 
     function onPasswordChange(pswd){
         setPassword(pswd);
-        validateMatch();
-        validatePassword(password);
     }
 
     function onPassword2Change(pswd2){
         setPassword2(pswd2);
-        validateMatch();
     }
 
     async function submit(e){
@@ -104,9 +142,9 @@ function SignUp(){
         <div className="login-signup-root">
             <form className='form-box' action='POST'>
             <h1 className='form-title'>Sign Up to Taqs</h1>
-                <input type="text" className="form-field" name="username" placeholder='Username' onChange={(e)=>onUsernameChange(e.target.value)} required/>
-                <input type='text' className="form-field" name="password" placeholder='Password' onChange={(e)=>onPasswordChange(e.target.value)} required/>
-                <input type='text' className="form-field" name="password2" placeholder='Confirm Password' onChange={(e)=>onPassword2Change(e.target.value)} required/>
+                <input type="text" value={username} className="form-field" name="username" placeholder='Username' onChange={(e)=>onUsernameChange(e.target.value)} required/>
+                <input type='text' value={password} className="form-field" name="password" placeholder='Password' onChange={(e)=>onPasswordChange(e.target.value)} required/>
+                <input type='text' value={password2} className="form-field" name="password2" placeholder='Confirm Password' onChange={(e)=>onPassword2Change(e.target.value)} required/>
                 <button type="submit" className='submit-button' onClick={submit}>Sign Up</button>
                 <div className='submit-error-message'>{errMessage}</div>
                 <span>Already have account? <Link className='form-link' to='/Login'>Login.</Link></span>
