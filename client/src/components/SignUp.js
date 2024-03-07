@@ -18,8 +18,7 @@ function SignUp(){
     const [validPassword,setValidPassword] = useState(false);
 
     const [password2,setPassword2] = useState('');
-
-    const [validMatch,setValidMatch] = useState('false');
+    const [validMatch,setValidMatch] = useState(false);
 
 
     useEffect(() => {
@@ -27,7 +26,8 @@ function SignUp(){
     }, [username]);
     
     useEffect(() => {
-        validateMatch();
+        if (validPassword)
+            validateMatch();
     }, [password, password2]);
     
     useEffect(() => {
@@ -56,7 +56,7 @@ function SignUp(){
 
     function validatePassword(ps){
         if (ps == ""){
-            setErrMessage("");
+            setErrMessage("Password cannot be Empty.");
             setValidPassword(false);
             return;
         }
@@ -74,6 +74,7 @@ function SignUp(){
         if (username=="")
         {
             setErrMessage("Username Cannot be empty.");
+            return;
         }
     }
 
@@ -81,7 +82,13 @@ function SignUp(){
         if(!validPassword && password!="")
             return;
 
-        var result = (password == password2);
+        if (password2=="")
+        {
+            setValidMatch(false);
+            return;
+        }
+
+        var result = (password === password2);
         if (!result)
         {
             setErrMessage('Password doesnt match.');
@@ -90,7 +97,7 @@ function SignUp(){
         else
         {
             setErrMessage('');
-            setValidUsername(true);
+            setValidMatch(true);
         }
         if (username=="")
         {
@@ -143,9 +150,9 @@ function SignUp(){
             <form className='form-box' action='POST'>
             <h1 className='form-title'>Sign Up to Taqs</h1>
                 <input type="text" value={username} className="form-field" name="username" placeholder='Username' onChange={(e)=>onUsernameChange(e.target.value)} required/>
-                <input type='text' value={password} className="form-field" name="password" placeholder='Password' onChange={(e)=>onPasswordChange(e.target.value)} required/>
-                <input type='text' value={password2} className="form-field" name="password2" placeholder='Confirm Password' onChange={(e)=>onPassword2Change(e.target.value)} required/>
-                <button type="submit" className='submit-button' onClick={submit}>Sign Up</button>
+                <input type='password' value={password} className="form-field" name="password" placeholder='Password' onChange={(e)=>onPasswordChange(e.target.value)} required/>
+                <input type='password' value={password2} className="form-field" name="password2" placeholder='Confirm Password' onChange={(e)=>onPassword2Change(e.target.value)} required/>
+                <button disabled={!validUserName || !validPassword || !validMatch} type="submit" className='submit-button' onClick={submit}>Sign Up</button>
                 <div className='submit-error-message'>{errMessage}</div>
                 <span>Already have account? <Link className='form-link' to='/Login'>Login.</Link></span>
                 <span>Not interested enough? <Link className='form-link' to='/'>Go Home.</Link></span>

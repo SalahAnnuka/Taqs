@@ -40,7 +40,13 @@
 
 }
 
-.submit-button:active{
+.submit-button:disabled {
+    /* Styles for the disabled button */
+    background-color: #ccc; /* Example background color for disabled state */
+    cursor: not-allowed;
+}
+
+.submit-button:not([disabled]):active {
     background-color: rgb(91, 175, 217);
 }
 

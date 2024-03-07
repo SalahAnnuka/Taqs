@@ -4,13 +4,70 @@ import axios from "axios";
 import "./styles/Login-SignUp.css";
 
 
+const USR_REGEX = /^[a-zA-Z0-9_]{3,20}$/;
+const PSWD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 
 function Login(){
 
-    const [username,setUsername]=useState('')
-    const [password,setPassword]=useState('')
+    const [username,setUsername] = useState('');
+    const [validUserName,setValidUsername] = useState(false);
+
+    const [password,setPassword] = useState('');
+    const [validPassword,setValidPassword] = useState(false);
+
     const [errMessage,setErrMessage]=useState('');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        validateUserName(username);
+    }, [username]);
+    
+    useEffect(() => {
+        validatePassword(password);
+    }, [password]);
+
+    function validateUserName(un){
+        if (un == ""){
+            setErrMessage("Username Cannot be empty.");
+            setValidUsername(false);
+            return;
+        }
+        var result = USR_REGEX.test(un);
+        if (!result)
+        {
+            setErrMessage('Invalid username, Please try something else');
+            setValidUsername(false);
+        }
+        else
+        {
+            setErrMessage('');
+            setValidUsername(true);
+        }
+        console.log(result);
+    }
+
+    function validatePassword(ps){
+        if (ps == ""){
+            setErrMessage("Password cannot be empty.");
+            setValidPassword(false);
+            return;
+        }
+        var result = PSWD_REGEX.test(ps);
+        if (!result)
+        {
+            setErrMessage('Invalid password, Not strong enough.');
+            setValidPassword(false);
+        }
+        else
+        {
+            setErrMessage('');
+            setValidPassword(true);
+        }
+        if (username=="")
+        {
+            setErrMessage("Username Cannot be empty.");
+        }
+    }
 
     async function submit(e){
         e.preventDefault();
@@ -62,7 +119,7 @@ function Login(){
                     placeholder='Password' 
                     onChange={(e) => { setPassword(e.target.value) }}
                     required/>
-                <button type="submit" onClick={submit} className='submit-button'>Login</button>
+                <button disabled={!validUserName || !validPassword} type="submit" onClick={submit} className='submit-button'>Login</button>
                 <div className="submit-error-message">{errMessage}</div>
                 <span>Don't have account? <Link to='/SignUp'>Sign Up.</Link></span>
                 <span>Not interested enough? <Link className='form-link' to='/'>Go Home.</Link></span>
