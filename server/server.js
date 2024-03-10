@@ -9,9 +9,22 @@ const cors = require('cors');
 
 const fs = require('fs');
 
-
+const corsOptions = {
+    origin: 'http://localhost:3000', // Allow requests from this origin and its subpaths
+    optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
+};
 // Enable CORS with specific options
-app.use(cors());
+app.use(cors(corsOptions));
+
+async function resetLoggedIn() {
+    try {
+        await collection.updateMany({}, { $set: { logged_in: 0 } });
+        console.log("Logged_in values reset to 0 successfully.");
+    } catch (error) {
+        console.error("Failed to reset logged_in values:", error);
+    }
+}
+resetLoggedIn();
 
 
 app.get('/Result/:country/:city', function(req,res){
@@ -30,52 +43,128 @@ app.get('/Result/:country/:city', function(req,res){
     });
 });
 
+app.get('/getUsers', async (req, res) => {
+    try {
+        const users = await collection.find().toArray();
+        res.json(users);
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        res.status(500).json({ error: "Failed to fetch users" });
+    }
+});
 
-app.post("/login",async(req,res)=>{
-    const{email,password}=req.body
 
-    try{
-        const check=await collection.findOne({email:email})
+app.post("/login", async (req, res) => {
+    const { username, password } = req.body;
 
-        if(check){
-            res.json("exist")
+    try {
+        const user = await collection.findOne({ username: username });
+        console.log("user status: " + user);
+        if (user) {
+            // Check if the password matches
+            if (user.password === password) {
+                // Set logged_in value to 1
+                await collection.updateOne({ username: username }, { $set: { logged_in: 1 } });
+                res.json("success");
+            } else {
+                res.json("wrongpass");
+            }
+        } else {
+            res.json("notexist");
         }
-        else{
-            res.json("notexist")
+    } catch (error) {
+        res.json("fail");
+        console.log("error logging in: " + error);
+    }
+});
+
+app.post("/setCityCountry/:username/:city/:country", async (req, res) => {
+    const { username, city, country } = req.params;
+
+    try {
+        // Find the user in the database
+        const user = await collection.findOne({ username });
+
+        if (user) {
+            // Update the city and country for the user
+            await collection.updateOne({ username }, { $set: { city, country } });
+            res.json({ success: true, message: "City and country updated successfully." });
+        } else {
+            res.status(404).json({ success: false, message: "User not found." });
         }
-
+    } catch (error) {
+        console.error("Error setting city and country:", error);
+        res.status(500).json({ success: false, message: "Failed to set city and country." });
     }
-    catch(e){
-        res.json("fail")
-    }
+});
 
-})
+app.post("/logout/:username", async (req, res) => {
+    const { username } = req.params;
 
-app.post("/signup",async(req,res)=>{
-    const{email,password}=req.body
+    try {
+        const user = await collection.findOne({ username: username });
 
-    const data={
-        email:email,
-        password:password
-    }
-
-    try{
-        const check=await collection.findOne({email:email})
-
-        if(check){
-            res.json("exist")
+        if (user) {
+            // Update the logged_in value to 0
+            await collection.updateOne({ username: username }, { $set: { logged_in: 0 } });
+            res.json("success");
+        } else {
+            res.json("user not found");
         }
-        else{
-            res.json("notexist")
-            await collection.insertMany([data])
+    } catch (error) {
+        res.json("fail");
+    }
+});
+
+app.post("/signup", async (req, res) => {
+    const { username, password } = req.body;
+
+    const userData = {
+        username: username,
+        password: password,
+        logged_in: 0 // Set logged_in value to 0 for new users
+    };
+
+    try {
+        const existingUser = await collection.findOne({ username: username });
+
+        if (existingUser) {
+            res.json("exist");
+        } else {
+            // User doesn't exist, so insert new user data into the collection
+            await collection.insertOne(userData); // Using insertOne to add a new user
+            res.json("success");
         }
-
+    } catch (error) {
+        res.json("fail");
     }
-    catch(e){
-        res.json("fail")
-    }
+});
 
-})
+app.post("/authorize/:user", async (req, res) => {
+    const { user } = req.params;
+
+    try {
+        // Find the user in the database
+        const foundUser = await collection.findOne({ username: user });
+
+        if (foundUser) {
+            // Check if the user is logged in
+            if (foundUser.logged_in === 1) {
+                res.json({ authorized: true });
+            } else {
+                res.json({ authorized: false, message: "User is not logged in." });
+            }
+        } else {
+            // User not found in the database
+            res.status(404).json({ authorized: false, message: "User not found." });
+        }
+    } catch (error) {
+        // Error handling
+        console.error("Error authorizing user:", error);
+        res.status(500).json({ authorized: false, message: "Failed to authorize user." });
+    }
+});
+
 
 
 
@@ -123,48 +212,43 @@ app.get('/forecast/:country/:city', async (req, res) => {
         const forecastData = await response.json();
 
         // Parse the forecast data into the specified format
-        const formattedForecast = formatForecastData(forecastData);
+        const output = forecastRestruct(forecastData);
 
         // Send the formatted data as JSON response
-        res.json(formattedForecast);
+        res.json(output);
     } catch (error) {
         console.error('Error fetching forecast data:', error);
         res.status(500).json({ error: 'Failed to fetch forecast data' });
     }
 });
 
-function formatForecastData(forecastData) {
+function getDayOfWeek(dateString) {
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const date = new Date(dateString);
+    const dayOfWeekIndex = date.getDay();
+    return daysOfWeek[dayOfWeekIndex];
+}
+
+function forecastRestruct(forecastData) {
     const formattedForecast = {};
 
-    // Loop through each forecast item
-    forecastData.list.forEach(item => {
-        const dateTime = new Date(item.dt_txt);
-        const dayOfWeek = dateTime.toLocaleDateString('en-US', { weekday: 'long' });
-        const hourOfDay = `hour${dateTime.getHours()}`;
+    // Iterate over the list of forecasts
+    forecastData.list.forEach(forecast => {
+        // Extract date from forecast datetime
+        const date = getDayOfWeek(forecast.dt_txt.split(' ')[0]);
 
-        // Initialize day if not already present
-        if (!formattedForecast[dayOfWeek]) {
-            formattedForecast[dayOfWeek] = {};
+        // If the date doesn't exist in formattedForecast, create an array for it
+        if (!formattedForecast[date]) {
+            formattedForecast[date] = [];
         }
 
-        // Initialize hour if not already present
-        if (!formattedForecast[dayOfWeek][hourOfDay]) {
-            formattedForecast[dayOfWeek][hourOfDay] = { hour: dateTime.getHours() };
-        }
-
-        // Extract weather details
-        const weatherDetails = {
-            weather: {
-                main: item.weather[0].main,
-                description: item.weather[0].description,
-                icon: item.weather[0].icon
-            },
-            temperature: item.main.temp,
-            feelsLike: item.main.feels_like
-        };
-
-        // Add weather details to the formatted forecast
-        formattedForecast[dayOfWeek][hourOfDay] = { ...formattedForecast[dayOfWeek][hourOfDay], ...weatherDetails };
+        // Push the forecast into the array corresponding to its date
+        formattedForecast[date].push({
+            hour: new Date(forecast.dt_txt).getHours(),
+            temp: forecast.main.temp,
+            description: forecast.weather[0].description,
+            icon: forecast.weather[0].icon
+        });
     });
 
     return formattedForecast;

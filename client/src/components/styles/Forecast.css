@@ -1,18 +1,17 @@
 .forecast-container {
     display: flex;
+    width: fit-content;
+    height: fit-content;
     flex-direction: column;
     align-items: center;
+    gap: 40px;
 }
 
-.forecast {
+
+.forecast-card {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-}
-
-.card {
+    gap: 40px;
     background-color: black;
     color: white;
     padding: 20px;
@@ -20,45 +19,54 @@
     position: relative;
     border-radius: 20px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
-    max-width: 600px;
+    width: 400px;
+    height:fit-content;
+    min-width: 300px;
     position: relative;
+    background-size: cover;
 }
 
-.card-title {
-    margin-bottom: 10px;
+.forecast-card-title {
     font-size: 1.5rem;
-    z-index: 20;
+    z-index: 999;
 }
 
 .hourly-forecast {
     display: flex;
+    flex: 1;
     flex-direction: row;
-    gap: 10px;
+    gap: 30px;
     max-height: 200px; /* Adjust the max height as needed */
     overflow: auto; /* Enable vertical scroll */
 }
 
-.hour {
+.forecast-hour-container {
+    width: 90px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
     z-index: 20;
     text-align: left;
-    justify-content: start;
+    justify-content: flex-start;
 }
 
-.hour-label {
+.forecast-hour-label {
     font-weight: bold;
 }
 
-.weather-icon {
+.forecast-weather-icon {
     width: 50px;
     height: 50px;
+    justify-content: start;
 }
 
-.weather-details {
-    text-align: center;
+.forecast-weather-details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height:max-content;
+    text-align: left;
 }
 
 .forecast-feels-like{
@@ -66,11 +74,16 @@
 }
 
 .forecast-dim{
-    background-color: rgba(0, 0, 0, .2);
+    background-color: rgba(0, 0, 0, .21);
     position: absolute;
     width: 700px;
     height: 100%;
     z-index: 12;
     top: 0;
     left: 0;
+}
+
+@media (max-width: 350px)
+{
+    
 }

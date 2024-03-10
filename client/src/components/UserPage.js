@@ -1,6 +1,11 @@
+import Facts from "./Facts";
+
+
 function UserPage(){
     return(
-        <h1>User Page</h1>
+        <div>
+            <Facts/>
+        </div>
     );
 }
 export default UserPage;

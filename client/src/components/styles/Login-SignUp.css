@@ -13,9 +13,11 @@
     background-color: white;
     padding: 40px 80px;
     width: 500px;
+    min-width: 250px;
     text-align: center;
     border-radius: 20px;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+    z-index: 999;
 }
 
 .form-field{
@@ -52,6 +54,11 @@
 
 .form-title{
     margin-bottom: 40px;
+    font-size: 2.5rem;
+}
+
+.form-subtext{
+    font-size: 1rem;
 }
 
 .form-link:link{
@@ -61,4 +68,20 @@
 .submit-error-message{
     color: red;
     font-size: 12px;
+}
+
+@media (max-width: 600px) {
+    .form-box{
+        padding: 40px 20px;
+        width: 300px;
+    }
+    .form-title{
+        margin-bottom: 20px;
+        font-size: 1.3rem;
+    }
+    .form-subtext{
+        font-size: 0.8rem;
+    }
+    
+    
 }

@@ -36,7 +36,6 @@ function SignUp(){
 
     function validateUserName(un){
         if (un == ""){
-            setErrMessage("Username Cannot be empty.");
             setValidUsername(false);
             return;
         }
@@ -56,7 +55,6 @@ function SignUp(){
 
     function validatePassword(ps){
         if (ps == ""){
-            setErrMessage("Password cannot be Empty.");
             setValidPassword(false);
             return;
         }
@@ -128,18 +126,21 @@ function SignUp(){
                 if(res.data=="exist"){
                     setErrMessage(`Usename ${username} already exists.`);
                 }
-                else if(res.data=="notexist"){
+                else if(res.data=="success"){
                     navigate(`/Login`);
+                }
+                else if(res.data=="fail"){
+                    setErrMessage('Sign up failed, Please try again.');
                 }
             })
             .catch(e=>{
                 setErrMessage('Sign up failed, Please try again.');
-                console.log(e);
+                console.log("connection error: "+e);
             })
 
         }
         catch(e){
-            console.log(e);
+            console.log("client side error: "+e);
 
         }
 
@@ -154,8 +155,8 @@ function SignUp(){
                 <input type='password' value={password2} className="form-field" name="password2" placeholder='Confirm Password' onChange={(e)=>onPassword2Change(e.target.value)} required/>
                 <button disabled={!validUserName || !validPassword || !validMatch} type="submit" className='submit-button' onClick={submit}>Sign Up</button>
                 <div className='submit-error-message'>{errMessage}</div>
-                <span>Already have account? <Link className='form-link' to='/Login'>Login.</Link></span>
-                <span>Not interested enough? <Link className='form-link' to='/'>Go Home.</Link></span>
+                <span className="form-subtext">Already have account? <Link className='form-link' to='/Login'>Login.</Link></span>
+                <span className="form-subtext">Not interested enough? <Link className='form-link' to='/'>Go Home.</Link></span>
             </form>
         </div>
     );

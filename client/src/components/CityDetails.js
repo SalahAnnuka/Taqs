@@ -67,18 +67,18 @@ function CityDetails({country,city}){
         <div className="CityDetails">
            <img className="details-bg" src={getImg(weatherData.weather[0].main)} alt="Weather image."/>
            <div className="details-items">
-            <div className="details-text">
-            <h1 className="details-title">{city}, {country} </h1>
-                <h3 className="details-desc">{capitalize(weatherData.weather[0].description)}</h3>
-                <div>Min. Temperature: {weatherData.main.temp_min}° C</div>
-                <div>Max. Temperature: {weatherData.main.temp_max}° C</div>
-                <div>Humidity: {weatherData.main.humidity}%</div>
-            </div>
-            <div className="details-divider"></div>
-            <div className="details-current-temp">
-                <div>{weatherData.main.temp}° C</div>
-                <div className="details-feels-like">Feels like {weatherData.main.feels_like}° C</div>
-            </div>
+                <div className="details-text">
+                    <h1 className="details-title">{city}, {country} </h1>
+                    <h3 className="details-desc">{capitalize(weatherData.weather[0].description)}</h3>
+                    <div className="details-temp-min">Min. Temperature: {weatherData.main.temp_min}° C</div>
+                    <div className="details-temp-max">Max. Temperature: {weatherData.main.temp_max}° C</div>
+                    <div className="details-humidity">Humidity: {weatherData.main.humidity}%</div>
+                </div>
+                <div className="details-divider"></div>
+                <div className="details-realtime">
+                    <div className="details-current-temp">{weatherData.main.temp}° C</div>
+                    <div className="details-feels-like">Feels like {weatherData.main.feels_like}° C</div>
+                </div>
             <img className="details-icon" src={getIcon(weatherData.weather[0].icon)}/>
            </div>
         </div>

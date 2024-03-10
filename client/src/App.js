@@ -6,9 +6,6 @@ import User from './components/User';
 import City from './components/City';
 
 
-
-
-
 function App() {
 
   function UserError(){
@@ -18,7 +15,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="App">     
       <Router>
         <Routes>
           <Route exact path="/" element={<Home/>}/>

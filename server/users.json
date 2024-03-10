@@ -1,27 +1,102 @@
 [
-    {
-      "john_doe":{
-      "email": "john.doe@example.com",
-      "password": "jdP@ssw0rd"
-      }
-    },
-    {
-      "jane_smith": {
-      "email": "jane.smith@example.com",
-      "password": "jsP@ssw0rd"
-      }
-    },
-    {
-      "mike_jackson":{
-      "email": "mike.jackson@example.com",
-      "password": "mjP@ssw0rd"
-      }
-    },
-    {
-      "sara_adams":{
-      "email": "sara.adams@example.com",
-      "password": "saP@ssw0rd"
-      }
-    }
-  ]
-  
+  {
+      "username": "JohnDoe123",
+      "password": "Password123",
+      "logged_in": 0
+  },
+  {
+      "username": "Jane_Smith",
+      "password": "P@ssw0rd",
+      "logged_in": 0
+  },
+  {
+      "username": "MichaelJ_1987",
+      "password": "SecurePassword1",
+      "logged_in": 0
+  },
+  {
+      "username": "Emily.Brown",
+      "password": "P@ssw0rd!2022",
+      "logged_in": 0
+  },
+  {
+      "username": "DavidDavis_456",
+      "password": "Secure123",
+      "logged_in": 0
+  },
+  {
+      "username": "Sarah.Miller_1",
+      "password": "P@ssw0rd",
+      "logged_in": 0
+  },
+  {
+      "username": "JamesW@1020",
+      "password": "SecurePassword123",
+      "logged_in": 0
+  },
+  {
+      "username": "Jennifer_T_15",
+      "password": "P@ssw0rd!2022",
+      "logged_in": 0
+  },
+  {
+      "username": "ChrisAnderson77",
+      "password": "Secure123",
+      "logged_in": 0
+  },
+  {
+      "username": "Amanda.T_10",
+      "password": "P@ssw0rd",
+      "logged_in": 0
+  },
+  {
+      "username": "DanielJackson",
+      "password": "SecurePassword123",
+      "logged_in": 0
+  },
+  {
+      "username": "Elizabeth_W1985",
+      "password": "P@ssw0rd!2022",
+      "logged_in": 0
+  },
+  {
+      "username": "MattHarris_2020",
+      "password": "SecurePassword1",
+      "logged_in": 0
+  },
+  {
+      "username": "Jessica_Martin",
+      "password": "P@ssw0rd!2022",
+      "logged_in": 0
+  },
+  {
+      "username": "Ryan_M_123",
+      "password": "SecurePassword1",
+      "logged_in": 0
+  },
+  {
+      "username": "Jennifer.Lee",
+      "password": "P@ssw0rd!2022",
+      "logged_in": 0
+  },
+  {
+      "username": "David_G_123",
+      "password": "SecurePassword1",
+      "logged_in": 0
+  },
+  {
+      "username": "AshleyT@10",
+      "password": "P@ssw0rd",
+      "logged_in": 0
+  },
+  {
+      "username": "Andrew_C_2022",
+      "password": "SecurePassword1",
+      "logged_in": 0
+  },
+  {
+      "username": "JessicaR_1",
+      "password": "P@ssw0rd!2022",
+      "logged_in": 0
+  }
+]

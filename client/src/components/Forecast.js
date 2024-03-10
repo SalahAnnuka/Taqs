@@ -31,21 +31,21 @@ function Forecast({ country, city }) {
     return (
         <div className="forecast-container">
             {isLoading ? (
-                <div>Loading...</div>
+                <div>Loading Forecast...</div>
             ) : (
-                <div className="forecast">
+                <div className="forecast-container">
                     {Object.keys(forecastData).map(day => (
-                        <div key={day} style={{ backgroundImage: `url(${BlueSky})`, }} className="card">
+                        <div key={day} style={{ backgroundImage: `url(${BlueSky})` }} className="forecast-card">
                             <div className='forecast-dim'></div>
-                             <h2 className="card-title">{day}</h2>
+                            <h2 className="forecast-card-title">{day}</h2>
                             <div className="hourly-forecast">
-                                {Object.keys(forecastData[day]).map(hour => (
-                                    <div key={hour} className="hour">
-                                        <span className="hour-label">{hour.hour}:00</span>
-                                        <img className="weather-icon" src={getIcon(hour.icon)} alt="Weather icon" />
-                                        <div className="weather-details">
-                                            {hour.description}<br />
-                                            {hour.temp}<br />
+                                {forecastData[day].map(hour => (
+                                    <div key={hour.hour} className="forecast-hour-container">
+                                        <span className="forecast-hour-label">{hour.hour}:00</span>
+                                        <img className="forecast-weather-icon" src={getIcon(hour.icon)} alt="Weather icon" />
+                                        <div className="forecast-weather-details">
+                                            <div>{hour.description}</div>
+                                            <div>{Math.round(hour.temp)}° C</div>
                                         </div>
                                     </div>
                                 ))}

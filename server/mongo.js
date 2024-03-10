@@ -1,24 +1,13 @@
-const mongoose=require("mongoose")
-mongoose.connect("mongodb://0.0.0.0:27017/react-login-tut")
-.then(()=>{
-    console.log("mongodb connected");
-})
-.catch(()=>{
-    console.log('failed');
-})
+const { MongoClient } = require("mongodb");
 
+const client = new MongoClient('mongodb+srv://smohammadannuka:alimurad@cluster0.gymtp4t.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0');
 
-const newSchema=new mongoose.Schema({
-    email:{
-        type:String,
-        required:true
-    },
-    password:{
-        type:String,
-        required:true
-    }
-})
+client.connect()
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch(error => {
+    console.error("Error connecting to MongoDB:", error);
+  });
 
-const collection = mongoose.model("collection",newSchema)
-
-module.exports=collection
+module.exports = client.db('db1').collection('users');

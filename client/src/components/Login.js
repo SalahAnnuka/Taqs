@@ -28,14 +28,12 @@ function Login(){
 
     function validateUserName(un){
         if (un == ""){
-            setErrMessage("Username Cannot be empty.");
             setValidUsername(false);
             return;
         }
         var result = USR_REGEX.test(un);
         if (!result)
         {
-            setErrMessage('Invalid username, Please try something else');
             setValidUsername(false);
         }
         else
@@ -48,14 +46,12 @@ function Login(){
 
     function validatePassword(ps){
         if (ps == ""){
-            setErrMessage("Password cannot be empty.");
             setValidPassword(false);
             return;
         }
         var result = PSWD_REGEX.test(ps);
         if (!result)
         {
-            setErrMessage('Invalid password, Not strong enough.');
             setValidPassword(false);
         }
         else
@@ -63,40 +59,34 @@ function Login(){
             setErrMessage('');
             setValidPassword(true);
         }
-        if (username=="")
-        {
-            setErrMessage("Username Cannot be empty.");
-        }
     }
 
-    async function submit(e){
+    async function submit(e) {
         e.preventDefault();
-
-        try{
-
-            await axios.post("http://localhost:7777/login",{
-                username,password
-            })
-            .then(res=>{
-                if(res.data=="exist"){
-                    navigate(`/User/${username}`,{state:{id:username}})
-                }
-                else if(res.data=="notexist"){
-                    setErrMessage(`No such username as ${username}.`);
-                }
-            })
-            .catch(e=>{
+    
+        try {
+            const response = await axios.post("http://localhost:7777/login", {
+                username,
+                password
+            });
+    
+            const responseData = response.data;
+    
+            if (responseData === "success") {
+                navigate(`/User/${username}`, { state: { id: username } });
+            } else if (responseData === "notexist") {
+                setErrMessage(`No such username as ${username}.`);
+            } else if (responseData === "wrongpass") {
+                setErrMessage("Incorrect password.");
+            } else if (responseData === "fail") {
                 setErrMessage('Login failed, Please try again.');
-                console.log(e);
-            })
-
+            }
+        } catch (error) {
+            setErrMessage('Login failed, Please try again.');
+            console.log(error);
         }
-        catch(e){
-            console.log(e);
-
-        }
-
     }
+    
 
 
 
@@ -121,8 +111,8 @@ function Login(){
                     required/>
                 <button disabled={!validUserName || !validPassword} type="submit" onClick={submit} className='submit-button'>Login</button>
                 <div className="submit-error-message">{errMessage}</div>
-                <span>Don't have account? <Link to='/SignUp'>Sign Up.</Link></span>
-                <span>Not interested enough? <Link className='form-link' to='/'>Go Home.</Link></span>
+                <span className="form-subtext">Don't have account? <Link to='/SignUp'>Sign Up.</Link></span>
+                <span className="form-subtext">Not interested enough? <Link className='form-link' to='/'>Go Home.</Link></span>
 
             </form>
         </div>

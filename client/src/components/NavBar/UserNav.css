@@ -3,9 +3,3 @@
     flex-direction: row;
     gap: 10px;
 }
-
-.usernav-logout-button{
-    background-color: transparent;
-    border: none 0px;
-    color: white;
-}
