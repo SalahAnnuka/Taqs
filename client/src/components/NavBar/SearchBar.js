@@ -2,6 +2,7 @@ import {FaSearch} from "react-icons/fa";
 import React, {useState} from "react";
 import SearchList from "./SearchList";
 import "./SearchBar.css";
+import User from "../User";
 
 
 function SearchBar({Username}){
@@ -35,7 +36,7 @@ function SearchBar({Username}){
     }
     const clearInput = () => {
         setInput('');
-      };
+      }; 
 
     return (
         <div className="SeachBar">

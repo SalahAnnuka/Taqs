@@ -69,6 +69,14 @@
     color: red;
     font-size: 12px;
 }
+.submit-success-message{
+    color: rgb(0, 202, 0);
+    font-size: 12px;
+}
+.submit-alert-message{
+    color: rgb(217, 159, 0);
+    font-size: 12px;
+}
 
 @media (max-width: 600px) {
     .form-box{

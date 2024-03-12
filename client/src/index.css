@@ -23,9 +23,9 @@ h1,h2,h3,h4,h5,h6{
 body{
   display: flex;
   width: 100vw;
-  height: fit-content;
+  min-height: fit-content;
   min-width: 300px;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 .home-body{
@@ -94,9 +94,26 @@ body{
   width: 100px;
 }
 
+.home-title{
+  width: 100%;
+  font-size: 3rem;
+}
+
+.home-article{
+  width: 100%;
+}
+
 @media (max-width: 600px)
 {
   body,#root,.home-body{
     justify-content: center;
+    text-align: center;
+  }
+  .bg-texture{
+    background-size: 60px 60px;
+  }
+
+  .home-title{
+    font-size: 1.9rem;
   }
 }

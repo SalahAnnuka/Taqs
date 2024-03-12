@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {Link,useNavigate} from 'react-router-dom';
+import {Link,useNavigate,useLocation} from 'react-router-dom';
 import axios from "axios";
 import "./styles/Login-SignUp.css";
 
@@ -8,6 +8,8 @@ const USR_REGEX = /^[a-zA-Z0-9_]{3,20}$/;
 const PSWD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 
 function Login(){
+    const location = useLocation();
+    const {stateType} = location.state ? location.state : "";
 
     const [username,setUsername] = useState('');
     const [validUserName,setValidUsername] = useState(false);
@@ -16,7 +18,20 @@ function Login(){
     const [validPassword,setValidPassword] = useState(false);
 
     const [errMessage,setErrMessage]=useState('');
+    const [messageStyle,setMessageStyle] = useState('submit-alert-message');
+
+
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (stateType === "signup-successful"){
+            setMessageStyle('submit-success-message');
+            setErrMessage(`Sign up successful, Please log in.`);
+        } else if (stateType === "unauthorized-entry"){
+            setMessageStyle('submit-error-message');
+            setErrMessage(`Unauthorized access, Login to continue.`);
+        }
+    });
 
     useEffect(() => {
         validateUserName(username);
@@ -75,13 +90,18 @@ function Login(){
             if (responseData === "success") {
                 navigate(`/User/${username}`, { state: { id: username } });
             } else if (responseData === "notexist") {
+                setMessageStyle('submit-alert-message');
                 setErrMessage(`No such username as ${username}.`);
             } else if (responseData === "wrongpass") {
+                setMessageStyle('submit-error-message');
                 setErrMessage("Incorrect password.");
             } else if (responseData === "fail") {
+                setMessageStyle('submit-error-message');
+
                 setErrMessage('Login failed, Please try again.');
             }
         } catch (error) {
+            setMessageStyle('submit-error-message');
             setErrMessage('Login failed, Please try again.');
             console.log(error);
         }
@@ -110,7 +130,7 @@ function Login(){
                     onChange={(e) => { setPassword(e.target.value) }}
                     required/>
                 <button disabled={!validUserName || !validPassword} type="submit" onClick={submit} className='submit-button'>Login</button>
-                <div className="submit-error-message">{errMessage}</div>
+                <div className={messageStyle}>{errMessage}</div>
                 <span className="form-subtext">Don't have account? <Link to='/SignUp'>Sign Up.</Link></span>
                 <span className="form-subtext">Not interested enough? <Link className='form-link' to='/'>Go Home.</Link></span>
 

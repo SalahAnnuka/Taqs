@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 function SearchList({result,clearInput,Username}){
     const navigate = useNavigate();
-    const [cityData,setCityData] = useState();
 
     function handleClick(country,city)
     {

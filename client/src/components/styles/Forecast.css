@@ -82,8 +82,32 @@
     top: 0;
     left: 0;
 }
+.forecast-weather-description{
 
-@media (max-width: 350px)
+}
+.forecast-weather-temperature{
+
+}
+
+@media (max-width: 600px)
 {
-    
+    .forecast-container{
+        width: 100%;
+        justify-content: center;
+        gap: 15px;
+    }
+    .forecast-card{
+        width: 100%;
+        gap: 15px;
+    }
+    .forecast-hour-container{
+        gap: 1px;
+        justify-content: center;
+        text-align: center;
+    }
+    .forecast-weather-description,.forecast-weather-temperature{
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
 }

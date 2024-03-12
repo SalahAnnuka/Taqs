@@ -1,53 +1,40 @@
 import { useState, useEffect } from "react";
-import "./styles/Facts.css"
+import "./styles/Facts.css";
 
-function Facts(){
+function Facts() {
     const [facts, setFacts] = useState([]);
-    const [isLoading,setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
 
-//9EdTJNjFDKxdXlNWCoafWA==WyAGa3pFE6X62WXr
-
-    useEffect(()=>{
-        try 
-        {
-            fetch('https://api.api-ninjas.com/v1/facts?limit=1',
-            { headers: { 'X-API-Key': '9EdTJNjFDKxdXlNWCoafWA==WyAGa3pFE6X62WXr' } })
-            .then(res=>{
-                return res.json();
+    useEffect(() => {
+        try {
+            fetch('https://api.api-ninjas.com/v1/facts?limit=1', {
+                headers: { 'X-API-Key': '9EdTJNjFDKxdXlNWCoafWA==WyAGa3pFE6X62WXr' }
             })
-            .then(data=>{
+            .then(res => res.json())
+            .then(data => {
                 setFacts(data);
                 setIsLoading(false);
-                console.log(facts);
-            });          
-        } 
-        catch (error)
-        {
+            })
+            .catch(error => {
+                console.error('Error fetching fact:', error);
+                setIsLoading(false);
+            });
+        } catch (error) {
             console.error('Error fetching fact:', error);
-            // Handle errors appropriately, e.g., display an error message
-            setFacts([]);
-            setIsLoading(true);
+            setIsLoading(false);
         }
-        return()=>{};
-    },[]);
+    }, []);
 
-
-    if (isLoading)
-        return(
-            <div className="Facts">
-            <h2 className="facts-title">Did You Know</h2>
-               <div className="fact">All you would see is this text if the fact doesn't load</div>
-            </div>
-        );
-    else return (
+    return (
         <div className="Facts">
-        <h2 className="facts-title">Did You Know</h2>
-           <div className="fact">{facts[0].fact}</div>
+            <h2 className="facts-title">Did You Know</h2>
+            {isLoading ? (
+                <div className="fact">Loading...</div>
+            ) : (
+                <div className="fact">{facts.length > 0 ? facts[0].fact : 'No fact available'}</div>
+            )}
         </div>
     );
-
-
-
 }
 
 export default Facts;

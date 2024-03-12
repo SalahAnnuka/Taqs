@@ -10,6 +10,7 @@ function SignUp(){
     const navigate = useNavigate();
 
     const [errMessage,setErrMessage] = useState('');
+    const [messageStyle,setMessageStyle] = useState('submit-alert-message');
 
     const [username,setUsername] = useState('');
     const [validUserName,setValidUsername] = useState(false);
@@ -42,6 +43,7 @@ function SignUp(){
         var result = USR_REGEX.test(un);
         if (!result)
         {
+            setMessageStyle('submit-alert-message');
             setErrMessage('Invalid username, Please try something else');
             setValidUsername(false);
         }
@@ -61,6 +63,7 @@ function SignUp(){
         var result = PSWD_REGEX.test(ps);
         if (!result)
         {
+            setMessageStyle('submit-alert-message');
             setErrMessage('Invalid password, Not strong enough.');
             setValidPassword(false);
         }
@@ -71,6 +74,7 @@ function SignUp(){
         }
         if (username=="")
         {
+            setMessageStyle('submit-alert-message');
             setErrMessage("Username Cannot be empty.");
             return;
         }
@@ -89,6 +93,7 @@ function SignUp(){
         var result = (password === password2);
         if (!result)
         {
+            setMessageStyle('submit-alert-message');
             setErrMessage('Password doesnt match.');
             setValidMatch(false);
         }
@@ -99,6 +104,7 @@ function SignUp(){
         }
         if (username=="")
         {
+            setMessageStyle('submit-alert-message');
             setErrMessage("Username Cannot be empty.");
         }
     }
@@ -124,16 +130,19 @@ function SignUp(){
             })
             .then(res=>{
                 if(res.data=="exist"){
+                    setMessageStyle('submit-alert-message');
                     setErrMessage(`Usename ${username} already exists.`);
                 }
                 else if(res.data=="success"){
-                    navigate(`/Login`);
+                    navigate(`/Login`,{ state: {stateType:"signup-successful"}} );
                 }
                 else if(res.data=="fail"){
+                    setMessageStyle('submit-error-message');
                     setErrMessage('Sign up failed, Please try again.');
                 }
             })
             .catch(e=>{
+                setMessageStyle('submit-error-message');
                 setErrMessage('Sign up failed, Please try again.');
                 console.log("connection error: "+e);
             })
@@ -154,7 +163,7 @@ function SignUp(){
                 <input type='password' value={password} className="form-field" name="password" placeholder='Password' onChange={(e)=>onPasswordChange(e.target.value)} required/>
                 <input type='password' value={password2} className="form-field" name="password2" placeholder='Confirm Password' onChange={(e)=>onPassword2Change(e.target.value)} required/>
                 <button disabled={!validUserName || !validPassword || !validMatch} type="submit" className='submit-button' onClick={submit}>Sign Up</button>
-                <div className='submit-error-message'>{errMessage}</div>
+                <div className={messageStyle}>{errMessage}</div>
                 <span className="form-subtext">Already have account? <Link className='form-link' to='/Login'>Login.</Link></span>
                 <span className="form-subtext">Not interested enough? <Link className='form-link' to='/'>Go Home.</Link></span>
             </form>

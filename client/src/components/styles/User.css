@@ -1,0 +1,22 @@
+.logout-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(121, 206, 248);
+    color: white;
+    height: 30px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 10px;
+    z-index: 999;
+}
+
+.logout-button:disabled {
+    /* Styles for the disabled button */
+    background-color: #ccc; /* Example background color for disabled state */
+    cursor: not-allowed;
+}
+
+.logout-button:not([disabled]):active {
+    background-color: rgb(91, 175, 217);
+}

@@ -98,6 +98,26 @@ app.post("/setCityCountry/:username/:city/:country", async (req, res) => {
     }
 });
 
+app.post("/getCityCountry/:username", async (req, res) => {
+    const { username } = req.params;
+
+    try {
+        // Find the user in the database
+        const user = await collection.findOne({ username });
+
+        if (user) {
+            // Retrieve the city and country for the user
+            const { city, country } = user;
+            res.json({ success: true, city, country });
+        } else {
+            res.status(404).json({ success: false, message: "User not found." });
+        }
+    } catch (error) {
+        console.error("Error getting city and country:", error);
+        res.status(500).json({ success: false, message: "Failed to get city and country." });
+    }
+});
+
 app.post("/logout/:username", async (req, res) => {
     const { username } = req.params;
 
@@ -122,7 +142,9 @@ app.post("/signup", async (req, res) => {
     const userData = {
         username: username,
         password: password,
-        logged_in: 0 // Set logged_in value to 0 for new users
+        logged_in: 0,
+        city: "Amman",
+        country: "JO"
     };
 
     try {

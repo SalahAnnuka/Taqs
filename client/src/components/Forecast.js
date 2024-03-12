@@ -9,6 +9,9 @@ function Forecast({ country, city }) {
     function getIcon(id) {
         return `https://openweathermap.org/img/wn/${id}.png`;
     }
+    function capitalize(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
 
     useEffect(() => {
         const fetchForecastData = async () => {
@@ -25,7 +28,7 @@ function Forecast({ country, city }) {
         };
 
         fetchForecastData();
-    }, [country, city]);
+    }, []);
     console.log(forecastData)
 
     return (
@@ -44,8 +47,8 @@ function Forecast({ country, city }) {
                                         <span className="forecast-hour-label">{hour.hour}:00</span>
                                         <img className="forecast-weather-icon" src={getIcon(hour.icon)} alt="Weather icon" />
                                         <div className="forecast-weather-details">
-                                            <div>{hour.description}</div>
-                                            <div>{Math.round(hour.temp)}° C</div>
+                                            <div className='forecast-weather-description'>{capitalize(hour.description)}</div>
+                                            <div className='forecast-weather-temperature'>{Math.round(hour.temp)}° C</div>
                                         </div>
                                     </div>
                                 ))}

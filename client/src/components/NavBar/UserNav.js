@@ -6,12 +6,13 @@ import "./UserNav.css";
 
 
  
-function UserNav(){
+function UserNav({Username}){
+
   return (
     <div className="NavBar">
-      <Link to="/User"><img className="logo" src={taqs_white} alt="Logo image."/></Link>
+      <Link to={`/User/${Username}`}><img className="logo" src={taqs_white} alt="Logo image."/></Link>
       <div className='usernav-right-elements'>
-        <SearchBar/>
+        <SearchBar Username={Username}/>
       </div>
     </div>
   );
