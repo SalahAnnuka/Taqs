@@ -6,39 +6,19 @@ import UserNav from "./NavBar/UserNav";
 import Facts from "./Facts";
 import Forecast from "./Forecast";
 import CityDetails from './CityDetails';
+import LogOut from './LogOut';
 function User() {
+
     const { Username } = useParams();
     const [authorized, setAuthorized] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [city,setCity] = useState("Moscow");
-    const [country,setCountry] = useState("RU");
+    const [city,setCity] = useState("");
+    const [country,setCountry] = useState("");
+    const [cityLoad,setCityLoad] = useState(false);
 
     const navigate = useNavigate();
 
-    const handleLogout = async () => {
-        try {
-            const response = await fetch(`http://localhost:7777/logout/${Username}`, {
-                method: 'POST',
-            });
-    
-            const data = await response.json();
-            if (data === "success") {
-                // Handle successful logout here, e.g., redirect to login page or update state
-                console.log("Logout successful");
-                navigate("/");
-                window.location.reload();
-            } else if (data === "user not found") {
-                // Handle case where user is not found
-                console.log("User not found");
-            } else {
-                // Handle other failure cases
-                console.log("Logout failed");
-            }
-        } catch (error) {
-            // Handle error if fetch fails
-            console.error("Error during logout:", error);
-        }
-    };
+
 
     useEffect(() => {
         const fetchAuthorization = async () => {
@@ -49,10 +29,10 @@ function User() {
 
                 // Update the state based on the authorization result
                 setAuthorized(authorized);
-                setLoading(false);
+                setCityLoad(true);
             } catch (error) {
                 console.error("Error authorizing user:", error);
-                setLoading(false);
+                setCityLoad(false);
             }
         };
 
@@ -68,16 +48,16 @@ function User() {
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching city and country:", error);
-                setLoading(false);
+                setLoading(true);
             }
         };
         fetchAuthorization();
         fetchCityCountry();
-    }, [Username,handleLogout]);
+    }, [Username]);
 
     
 
-    if (loading) {
+    if (loading || !cityLoad) {
         return <div>Loading...</div>;
     }
 
@@ -95,7 +75,7 @@ function User() {
               <h1>Welcome, {Username}</h1>
               <CityDetails city={city} country={country} />
               <Forecast city={city} country={country} />
-              <div className='logout-button' onClick={() => handleLogout()}>Log out</div>
+              <LogOut Username={Username}/>
             </div>
         </div>
     );

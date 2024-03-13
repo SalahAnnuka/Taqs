@@ -81,10 +81,10 @@ function SignUp(){
     }
 
     function validateMatch(){
-        if(!validPassword && password!="")
+        if(!validPassword && password!=="")
             return;
 
-        if (password2=="")
+        if (password2==="")
         {
             setValidMatch(false);
             return;
@@ -102,7 +102,7 @@ function SignUp(){
             setErrMessage('');
             setValidMatch(true);
         }
-        if (username=="")
+        if (username==="")
         {
             setMessageStyle('submit-alert-message');
             setErrMessage("Username Cannot be empty.");
@@ -129,14 +129,14 @@ function SignUp(){
                 username,password
             })
             .then(res=>{
-                if(res.data=="exist"){
+                if(res.data==="exist"){
                     setMessageStyle('submit-alert-message');
                     setErrMessage(`Usename ${username} already exists.`);
                 }
-                else if(res.data=="success"){
+                else if(res.data==="success"){
                     navigate(`/Login`,{ state: {stateType:"signup-successful"}} );
                 }
-                else if(res.data=="fail"){
+                else if(res.data==="fail"){
                     setMessageStyle('submit-error-message');
                     setErrMessage('Sign up failed, Please try again.');
                 }
